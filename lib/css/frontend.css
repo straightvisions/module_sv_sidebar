@@ -1,0 +1,28 @@
+/* Widget - Categories */
+.sv_sidebar .widget_categories ul {
+	padding: 0;
+}
+
+.sv_sidebar .widget_categories li {
+	background-color: #343a40;
+	color: #FFF;
+	display: flex;
+	padding-right: 20px;
+	align-items: center;
+	height: 50px;
+	margin-bottom: 4px;
+	border-radius: 5px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	transition: background-color .25s ease;
+}
+
+.sv_sidebar .widget_categories li:hover {
+	background-color: #000;
+}
+
+.sv_sidebar .widget_categories li a {
+	color: #FFF;
+	flex-grow: 2;
+	padding-left: 20px;
+}
