@@ -15,16 +15,14 @@ class sv_sidebar extends init {
 	private $template                           = false;
 	private $sidebars                           = array();
 
-	public function __construct( $path, $url ) {
-		$this->path								= $path;
-		$this->url								= $url;
-		$this->name								= get_class($this);
+	public function __construct() {
 
+	}
+	public function init(){
 		add_shortcode( $this->get_module_name(), array( $this, 'shortcode' ) );
-
+		
 		add_action( 'widgets_init', array( $this, 'sidebars' ) );
 	}
-
 	public function shortcode( $settings, $content = '' ) {
 		$settings								= shortcode_atts(
 			array(
