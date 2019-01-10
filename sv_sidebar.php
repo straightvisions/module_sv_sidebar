@@ -23,10 +23,6 @@ class sv_sidebar extends init {
 		$this->set_module_title( 'SV Sidebar' );
 		$this->set_module_desc( __( 'This module gives the ability to display sidebars via the "[sv_sidebar]" shortcode.', $this->get_module_name() ) );
 
-		// Load Styles
-		static::$scripts->create( $this )
-			->set_source( $this->get_file_url( 'lib/css/frontend.css' ), $this->get_file_path( 'lib/css/frontend.css' ) );
-
 		// Action Hooks
 		add_action( 'widgets_init', array( $this, 'sidebars' ) );
 
@@ -35,6 +31,10 @@ class sv_sidebar extends init {
 	}
 
 	public function shortcode( $settings, $content = '' ) {
+		// Load Styles
+		static::$scripts->create( $this )
+		                ->set_source( $this->get_file_url( 'lib/css/frontend.css' ), $this->get_file_path( 'lib/css/frontend.css' ) );
+
 		$settings								= shortcode_atts(
 			array(
 				'inline'						=> false,
