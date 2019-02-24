@@ -2,6 +2,7 @@
 namespace sv_100;
 
 /**
+ * @version         1.00
  * @author			straightvisions
  * @package			sv_100
  * @copyright		2019 Matthias Bathke
