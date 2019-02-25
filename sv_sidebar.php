@@ -32,18 +32,19 @@ class sv_sidebar extends init {
 	}
 
 	public function shortcode( $settings, $content = '' ) {
-		// Load Styles
-		static::$scripts->create( $this )
-		                ->set_source( $this->get_file_url( 'lib/css/frontend.css' ), $this->get_file_path( 'lib/css/frontend.css' ) );
-
 		$settings								= shortcode_atts(
 			array(
-				'inline'						=> false,
-				'template'                      => false,
+				'inline'						=> true,
+				'template'						=> false,
 			),
 			$settings,
 			$this->get_module_name()
 		);
+
+		// Load Styles
+		static::$scripts->create( $this )
+			->set_source( $this->get_file_url( 'lib/css/frontend.css' ), $this->get_file_path( 'lib/css/frontend.css' ) )
+			->set_inline($settings['inline']);
 
 		$this->template                         = $settings['template'] ? $settings['template'] : 'home';
 
