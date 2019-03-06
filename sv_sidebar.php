@@ -43,13 +43,13 @@ class sv_sidebar extends init {
 
 		// Load Styles
 		static::$scripts->create( $this )
-			->set_source( $this->get_file_url( 'lib/css/frontend.css' ), $this->get_file_path( 'lib/css/frontend.css' ) )
+			->set_path( 'lib/css/frontend.css' )
 			->set_inline($settings['inline']);
 
 		$this->template                         = $settings['template'] ? $settings['template'] : 'home';
 
 		ob_start();
-		include( $this->get_file_path( 'lib/tpl/frontend.php' ) );
+		include( $this->get_path( 'lib/tpl/frontend.php' ) );
 		$output									= ob_get_contents();
 		ob_end_clean();
 
