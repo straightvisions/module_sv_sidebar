@@ -67,7 +67,7 @@ class sv_sidebar extends init {
 				'name'							=> __( 'Footer - Left', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_footer_left',
 				'description'					=> __( 'Widgets in this area will be shown in the left section of the footer.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s mb-3">',
+				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
 				'after_widget'					=> '</div>',
 				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
 				'after_title'					=> '</h3>',
@@ -79,7 +79,7 @@ class sv_sidebar extends init {
 				'name'							=> __( 'Footer - Center', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_footer_center',
 				'description'					=> __( 'Widgets in this area will be shown in the center section of the footer.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s mb-3">',
+				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
 				'after_widget'					=> '</div>',
 				'before_title'		    		=> '<h3 class="' . $this->get_module_name() . '">',
 				'after_title'					=> '</h3>',
@@ -91,7 +91,7 @@ class sv_sidebar extends init {
 				'name'							=> __( 'Footer - Right', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_footer_right',
 				'description'					=> __( 'Widgets in this area will be shown in the right section of the footer.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s mb-3">',
+				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
 				'after_widget'				    => '</div>',
 				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
 				'after_title'					=> '</h3>',
@@ -103,7 +103,7 @@ class sv_sidebar extends init {
 				'name'							=> __( 'Home Sidebar', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_home',
 				'description'					=> __( 'Widgets in this area will be shown in the sidebar of the home page.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s mb-3">',
+				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
 				'after_widget'					=> '</div>',
 				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
 				'after_title'					=> '</h3>',
@@ -115,9 +115,9 @@ class sv_sidebar extends init {
 				'name'							=> __( 'Post Sidebar', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_post',
 				'description'					=> __( 'Widgets in this area will be shown in the sidebar of single posts.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s mb-5">',
+				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
 				'after_widget'					=> '</div>',
-				'before_title'					=> '<h3 class="' . $this->get_module_name() . ' mb-4 pb-3 border-bottom">',
+				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
 				'after_title'					=> '</h3>',
 			)
 		);
@@ -127,9 +127,9 @@ class sv_sidebar extends init {
 				'name'							=> __( 'Author Sidebar', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_author',
 				'description'					=> __( 'Widgets in this area will be shown in the sidebar of author pages.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s mb-5">',
+				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
 				'after_widget'					=> '</div>',
-				'before_title'					=> '<h3 class="' . $this->get_module_name() . ' mb-4 pb-3 border-bottom">',
+				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
 				'after_title'					=> '</h3>',
 			)
 		);
@@ -139,9 +139,21 @@ class sv_sidebar extends init {
 				'name'							=> __( 'Search Sidebar', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_search',
 				'description'					=> __( 'Widgets in this area will be shown in the sidebar of search page.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s mb-5">',
+				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
 				'after_widget'					=> '</div>',
-				'before_title'					=> '<h3 class="' . $this->get_module_name() . ' mb-4 pb-3 border-bottom">',
+				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
+				'after_title'					=> '</h3>',
+			)
+		);
+
+		array_push( $this->sidebars,
+			array(
+				'name'							=> __( 'Navigation Sidebar', $this->get_module_name() ),
+				'id'							=> $this->get_module_name() . '_navigation',
+				'description'					=> __( 'Widgets in this area will be shown in the sidebar of the navigation.', $this->get_module_name() ),
+				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
+				'after_widget'					=> '</div>',
+				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
 				'after_title'					=> '</h3>',
 			)
 		);
