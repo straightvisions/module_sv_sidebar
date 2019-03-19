@@ -20,6 +20,9 @@ class sv_sidebar extends init {
 	}
 
 	public function init(){
+		// Translates the module
+		load_theme_textdomain( $this->get_module_name(), $this->get_path( 'languages' ) );
+
 		// Module Info
 		$this->set_module_title( 'SV Sidebar' );
 		$this->set_module_desc( __( 'This module gives the ability to display sidebars via the "[sv_sidebar]" shortcode.', $this->get_module_name() ) );
@@ -100,7 +103,7 @@ class sv_sidebar extends init {
 
 		array_push( $this->sidebars,
 			array(
-				'name'							=> __( 'Home Sidebar', $this->get_module_name() ),
+				'name'							=> __( 'Sidebar - Home', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_home',
 				'description'					=> __( 'Widgets in this area will be shown in the sidebar of the home page.', $this->get_module_name() ),
 				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
@@ -112,7 +115,7 @@ class sv_sidebar extends init {
 
 		array_push( $this->sidebars,
 			array(
-				'name'							=> __( 'Post Sidebar', $this->get_module_name() ),
+				'name'							=> __( 'Sidebar - Posts', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_post',
 				'description'					=> __( 'Widgets in this area will be shown in the sidebar of single posts.', $this->get_module_name() ),
 				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
@@ -124,7 +127,7 @@ class sv_sidebar extends init {
 
 		array_push( $this->sidebars,
 			array(
-				'name'							=> __( 'Page Sidebar', $this->get_module_name() ),
+				'name'							=> __( 'Sidebar - Pages', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_page',
 				'description'					=> __( 'Widgets in this area will be shown in the sidebar of a page.', $this->get_module_name() ),
 				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
@@ -136,19 +139,7 @@ class sv_sidebar extends init {
 
 		array_push( $this->sidebars,
 			array(
-				'name'							=> __( 'Author Sidebar', $this->get_module_name() ),
-				'id'							=> $this->get_module_name() . '_author',
-				'description'					=> __( 'Widgets in this area will be shown in the sidebar of author pages.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
-				'after_widget'					=> '</div>',
-				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
-				'after_title'					=> '</h3>',
-			)
-		);
-
-		array_push( $this->sidebars,
-			array(
-				'name'							=> __( 'Search Sidebar', $this->get_module_name() ),
+				'name'							=> __( 'Sidebar - Search', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_search',
 				'description'					=> __( 'Widgets in this area will be shown in the sidebar of search page.', $this->get_module_name() ),
 				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
@@ -160,7 +151,7 @@ class sv_sidebar extends init {
 
 		array_push( $this->sidebars,
 			array(
-				'name'							=> __( 'Navigation Sidebar', $this->get_module_name() ),
+				'name'							=> __( 'Navigation', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_navigation',
 				'description'					=> __( 'Widgets in this area will be shown in the sidebar of the navigation.', $this->get_module_name() ),
 				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
