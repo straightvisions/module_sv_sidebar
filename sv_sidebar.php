@@ -124,6 +124,18 @@ class sv_sidebar extends init {
 
 		array_push( $this->sidebars,
 			array(
+				'name'							=> __( 'Page Sidebar', $this->get_module_name() ),
+				'id'							=> $this->get_module_name() . '_page',
+				'description'					=> __( 'Widgets in this area will be shown in the sidebar of a page.', $this->get_module_name() ),
+				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
+				'after_widget'					=> '</div>',
+				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
+				'after_title'					=> '</h3>',
+			)
+		);
+
+		array_push( $this->sidebars,
+			array(
 				'name'							=> __( 'Author Sidebar', $this->get_module_name() ),
 				'id'							=> $this->get_module_name() . '_author',
 				'description'					=> __( 'Widgets in this area will be shown in the sidebar of author pages.', $this->get_module_name() ),
