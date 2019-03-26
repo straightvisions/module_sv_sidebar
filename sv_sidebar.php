@@ -12,8 +12,18 @@ namespace sv_100;
  */
 
 class sv_sidebar extends init {
-	private $template                           = false;
-	private $sidebars                           = array();
+	protected static $sidebars                  = array();
+	protected static $custom_styles             = array();
+
+	// Properties
+	protected $ID                               = false;
+	protected $name                             = false;
+	protected $description                      = false;
+	protected $before_widget                    = false;
+	protected $after_widget                     = false;
+	protected $before_title                     = false;
+	protected $after_title                      = false;
+
 
 	public function __construct() {
 
@@ -28,15 +38,16 @@ class sv_sidebar extends init {
 		$this->set_module_desc( __( 'This module gives the ability to display sidebars via the "[sv_sidebar]" shortcode.', $this->get_module_name() ) );
 
 		// Action Hooks
-		add_action( 'widgets_init', array( $this, 'sidebars' ) );
+		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
 
 		// Shortcodes
 		add_shortcode( $this->get_module_name(), array( $this, 'shortcode' ) );
 
+		// Register Styles
 		$this->scripts_queue['frontend']			= static::$scripts->create( $this )
-			->set_ID('frontend')
+			->set_ID( 'frontend' )
 			->set_path( 'lib/css/frontend.css' )
-			->set_inline(true);
+			->set_inline( true );
 	}
 
 	public function shortcode( $settings, $content = '' ) {
@@ -49,12 +60,7 @@ class sv_sidebar extends init {
 			$this->get_module_name()
 		);
 
-		// Load Styles
-		$this->scripts_queue['frontend']
-			->set_inline($settings['inline'])
-			->set_is_enqueued();
-
-		$this->template                         = $settings['template'] ? $settings['template'] : 'home';
+		$this->load_styles( $settings );
 
 		ob_start();
 		include( $this->get_path( 'lib/tpl/frontend.php' ) );
@@ -64,105 +70,142 @@ class sv_sidebar extends init {
 		return $output;
 	}
 
-	public function sidebars() {
-		array_push( $this->sidebars,
-			array(
-				'name'							=> __( 'Footer - Left', $this->get_module_name() ),
-				'id'							=> $this->get_module_name() . '_footer_left',
-				'description'					=> __( 'Widgets in this area will be shown in the left section of the footer.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
-				'after_widget'					=> '</div>',
-				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
-				'after_title'					=> '</h3>',
-			)
-		);
+	// Loads the styles for the widgets inside the sidebar
+	protected function load_styles( array $settings ) :sv_sidebar {
+		$template                               = $this->get_prefix( $settings['template'] );
 
-		array_push( $this->sidebars,
-			array(
-				'name'							=> __( 'Footer - Center', $this->get_module_name() ),
-				'id'							=> $this->get_module_name() . '_footer_center',
-				'description'					=> __( 'Widgets in this area will be shown in the center section of the footer.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
-				'after_widget'					=> '</div>',
-				'before_title'		    		=> '<h3 class="' . $this->get_module_name() . '">',
-				'after_title'					=> '</h3>',
-			)
-		);
+		if ( isset( static::$custom_styles[ $template ] ) ) {
+			static::$scripts->create( $this )
+				            ->set_ID( $template )
+				            ->set_path( '../' . static::$custom_styles[ $template ] )
+				            ->set_inline( $settings['inline'] )
+				            ->set_is_enqueued();
+		} else {
+			$this->scripts_queue['frontend']
+				->set_inline( $settings['inline'] )
+				->set_is_enqueued();
+		}
 
-		array_push( $this->sidebars,
-			array(
-				'name'							=> __( 'Footer - Right', $this->get_module_name() ),
-				'id'							=> $this->get_module_name() . '_footer_right',
-				'description'					=> __( 'Widgets in this area will be shown in the right section of the footer.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
-				'after_widget'				    => '</div>',
-				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
-				'after_title'					=> '</h3>',
-			)
-		);
+		return $this;
+	}
 
-		array_push( $this->sidebars,
-			array(
-				'name'							=> __( 'Sidebar - Home', $this->get_module_name() ),
-				'id'							=> $this->get_module_name() . '_home',
-				'description'					=> __( 'Widgets in this area will be shown in the sidebar of the home page.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
-				'after_widget'					=> '</div>',
-				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
-				'after_title'					=> '</h3>',
-			)
-		);
-
-		array_push( $this->sidebars,
-			array(
-				'name'							=> __( 'Sidebar - Posts', $this->get_module_name() ),
-				'id'							=> $this->get_module_name() . '_post',
-				'description'					=> __( 'Widgets in this area will be shown in the sidebar of single posts.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
-				'after_widget'					=> '</div>',
-				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
-				'after_title'					=> '</h3>',
-			)
-		);
-
-		array_push( $this->sidebars,
-			array(
-				'name'							=> __( 'Sidebar - Pages', $this->get_module_name() ),
-				'id'							=> $this->get_module_name() . '_page',
-				'description'					=> __( 'Widgets in this area will be shown in the sidebar of a page.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
-				'after_widget'					=> '</div>',
-				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
-				'after_title'					=> '</h3>',
-			)
-		);
-
-		array_push( $this->sidebars,
-			array(
-				'name'							=> __( 'Sidebar - Search', $this->get_module_name() ),
-				'id'							=> $this->get_module_name() . '_search',
-				'description'					=> __( 'Widgets in this area will be shown in the sidebar of search page.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
-				'after_widget'					=> '</div>',
-				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
-				'after_title'					=> '</h3>',
-			)
-		);
-
-		array_push( $this->sidebars,
-			array(
-				'name'							=> __( 'Navigation', $this->get_module_name() ),
-				'id'							=> $this->get_module_name() . '_navigation',
-				'description'					=> __( 'Widgets in this area will be shown in the sidebar of the navigation.', $this->get_module_name() ),
-				'before_widget'					=> '<div id="%1$s" class="widget %2$s">',
-				'after_widget'					=> '</div>',
-				'before_title'					=> '<h3 class="' . $this->get_module_name() . '">',
-				'after_title'					=> '</h3>',
-			)
-		);
-
-		foreach ( $this->sidebars as $sidebar ) {
+	// Registers all created sidebars
+	public function register_sidebars() {
+		foreach ( static::$sidebars as $sidebar ) {
 			register_sidebar( $sidebar );
 		}
+	}
+
+	// Object Methods
+	public function create( $parent ) :sv_sidebar {
+		$new                                    = new static();
+
+		$new->set_root( $parent->get_root() );
+		$new->set_parent( $parent );
+
+		$new->ID = $this->get_prefix( $parent->get_module_name() );
+
+		return $new;
+	}
+
+	public function load_sidebar() :sv_sidebar {
+		$sidebar                = array(
+			'name'              => $this->get_name() ? $this->get_name() : $this->get_ID(),
+			'id'                => $this->get_ID(),
+			'description'       => $this->get_desc() ? $this->get_desc() : '',
+			'before_widget'     => $this->get_before_widget() ? $this->get_before_widget() : '<div id="%1$s" class="widget %2$s">',
+			'after_widget'      => $this->get_after_widget() ? $this->get_after_widget() : '</div>',
+			'before_title'      => $this->get_before_title() ? $this->get_before_title() : '<h3 class="' . $this->get_prefix() . '">',
+			'after_title'       => $this->get_after_title() ? $this->get_after_title() : '</h3>',
+		);
+
+		static::$sidebars[]     = $sidebar;
+
+		return $this->get_root()->sv_sidebar;
+	}
+
+	// Setter & Getter
+	public function set_ID( string $ID ) :sv_sidebar {
+		$this->ID               = $this->get_ID() . '_' . $ID;
+
+		return $this;
+	}
+
+	public function get_ID() :string {
+		return $this->ID;
+	}
+
+	public function set_name( string $name ) :sv_sidebar {
+		$this->name                             = $name;
+
+		return $this;
+	}
+
+	public function get_name() :string {
+		return $this->name;
+	}
+
+	public function set_desc( string $description ) :sv_sidebar {
+		$this->description                      = $description;
+
+		return $this;
+	}
+
+	public function get_desc() :string {
+		return $this->description;
+	}
+
+	public function set_before_widget( string $before_widget ) :sv_sidebar {
+		$this->before_widget                    = $before_widget;
+
+		return $this;
+	}
+
+	public function get_before_widget() :string {
+		return $this->before_widget;
+	}
+
+	public function set_after_widget( string $after_widget ) :sv_sidebar {
+		$this->after_widget                     = $after_widget;
+
+		return $this;
+	}
+
+	public function get_after_widget() :string {
+		return $this->after_widget;
+	}
+
+	public function set_before_title( string $before_title ) :sv_sidebar {
+		$this->before_title                     = $before_title;
+
+		return $this;
+	}
+
+	public function get_before_title() :string {
+		return $this->before_title;
+	}
+
+	public function set_after_title( string $after_title ) :sv_sidebar {
+		$this->after_title                      = $after_title;
+
+		return $this;
+	}
+
+	public function get_after_title() :string {
+		return $this->after_title;
+	}
+
+	public function set_css( string $css_path, string $ID = '' ) :sv_sidebar {
+		if ( !empty( $ID ) ) {
+			static::$custom_styles[ $this->get_prefix( $ID ) ]  = $css_path;
+		} else {
+			static::$custom_styles[ $this->get_ID() ]           = $css_path;
+		}
+
+		return $this;
+	}
+
+	public function get_css() :string {
+		return static::$custom_styles[ $this->get_ID() ];
 	}
 }
