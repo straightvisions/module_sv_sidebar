@@ -43,24 +43,22 @@ class sv_sidebar extends init {
 		// Shortcodes
 		add_shortcode( $this->get_module_name(), array( $this, 'shortcode' ) );
 
-		// Register Styles
-		$this->scripts_queue['frontend']			= static::$scripts->create( $this )
-			->set_ID( 'frontend' )
-			->set_path( 'lib/css/frontend.css' )
-			->set_inline( true );
+		$this->register_scripts();
 	}
 
 	public function shortcode( $settings, $content = '' ) {
 		$settings								= shortcode_atts(
 			array(
 				'inline'						=> true,
-				'template'						=> false,
+				'id'					    	=> false,
 			),
 			$settings,
 			$this->get_module_name()
 		);
 
-		$this->load_styles( $settings );
+		$settings['id']                         = $this->get_prefix( $settings['id'] );
+
+		$this->load_scripts( $settings );
 
 		ob_start();
 		include( $this->get_path( 'lib/tpl/frontend.php' ) );
@@ -70,14 +68,24 @@ class sv_sidebar extends init {
 		return $output;
 	}
 
-	// Loads the styles for the widgets inside the sidebar
-	protected function load_styles( array $settings ) :sv_sidebar {
-		$template                               = $this->get_prefix( $settings['template'] );
+	// Registers standard scripts
+	protected function register_scripts() :sv_sidebar {
+		// Styles
+		$this->scripts_queue['frontend']	    = static::$scripts
+			->create( $this )
+			->set_ID( 'frontend' )
+			->set_path( 'lib/css/frontend.css' )
+			->set_inline( true );
 
-		if ( isset( static::$custom_styles[ $template ] ) ) {
+		return $this;
+	}
+
+	// Loads the scripts for the widgets inside the sidebar
+	protected function load_scripts( array $settings ) :sv_sidebar {
+		if ( isset( static::$custom_styles[ $settings['id'] ] ) ) {
 			static::$scripts->create( $this )
-				            ->set_ID( $template )
-				            ->set_path( '../' . static::$custom_styles[ $template ] )
+				            ->set_ID( $settings['id'] )
+				            ->set_path( '../' . static::$custom_styles[ $settings['id'] ] )
 				            ->set_inline( $settings['inline'] )
 				            ->set_is_enqueued();
 		} else {
