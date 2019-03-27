@@ -56,7 +56,7 @@ class sv_sidebar extends init {
 		$settings['id']                         = $this->get_prefix( $settings['id'] );
 
 		ob_start();
-		include( $this->get_path( 'lib/tpl/frontend.php' ) );
+		include( $this->get_path( 'lib/frontend/tpl/default.php' ) );
 		$output									= ob_get_contents();
 		ob_end_clean();
 
