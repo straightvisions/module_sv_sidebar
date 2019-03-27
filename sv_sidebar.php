@@ -13,7 +13,7 @@ namespace sv_100;
 
 class sv_sidebar extends init {
 	protected static $sidebars                  = array();
-	protected static $custom_styles             = array();
+	protected static $custom_scripts            = array();
 
 	// Properties
 	protected $ID                               = false;
@@ -42,14 +42,11 @@ class sv_sidebar extends init {
 
 		// Shortcodes
 		add_shortcode( $this->get_module_name(), array( $this, 'shortcode' ) );
-
-		$this->register_scripts();
 	}
 
 	public function shortcode( $settings, $content = '' ) {
 		$settings								= shortcode_atts(
 			array(
-				'inline'						=> true,
 				'id'					    	=> false,
 			),
 			$settings,
@@ -58,43 +55,12 @@ class sv_sidebar extends init {
 
 		$settings['id']                         = $this->get_prefix( $settings['id'] );
 
-		$this->load_scripts( $settings );
-
 		ob_start();
 		include( $this->get_path( 'lib/tpl/frontend.php' ) );
 		$output									= ob_get_contents();
 		ob_end_clean();
 
 		return $output;
-	}
-
-	// Registers standard scripts
-	protected function register_scripts() :sv_sidebar {
-		// Styles
-		$this->scripts_queue['frontend']	    = static::$scripts
-			->create( $this )
-			->set_ID( 'frontend' )
-			->set_path( 'lib/css/frontend.css' )
-			->set_inline( true );
-
-		return $this;
-	}
-
-	// Loads the scripts for the widgets inside the sidebar
-	protected function load_scripts( array $settings ) :sv_sidebar {
-		if ( isset( static::$custom_styles[ $settings['id'] ] ) ) {
-			static::$scripts->create( $this )
-				            ->set_ID( $settings['id'] )
-				            ->set_path( '../' . static::$custom_styles[ $settings['id'] ] )
-				            ->set_inline( $settings['inline'] )
-				            ->set_is_enqueued();
-		} else {
-			$this->scripts_queue['frontend']
-				->set_inline( $settings['inline'] )
-				->set_is_enqueued();
-		}
-
-		return $this;
 	}
 
 	// Registers all created sidebars
@@ -111,7 +77,7 @@ class sv_sidebar extends init {
 		$new->set_root( $parent->get_root() );
 		$new->set_parent( $parent );
 
-		$new->ID = $this->get_prefix( $parent->get_module_name() );
+		$new->ID                                = $this->get_prefix( $parent->get_module_name() );
 
 		return $new;
 	}
@@ -201,19 +167,5 @@ class sv_sidebar extends init {
 
 	public function get_after_title() :string {
 		return $this->after_title;
-	}
-
-	public function set_css( string $css_path, string $ID = '' ) :sv_sidebar {
-		if ( !empty( $ID ) ) {
-			static::$custom_styles[ $this->get_prefix( $ID ) ]  = $css_path;
-		} else {
-			static::$custom_styles[ $this->get_ID() ]           = $css_path;
-		}
-
-		return $this;
-	}
-
-	public function get_css() :string {
-		return static::$custom_styles[ $this->get_ID() ];
 	}
 }
