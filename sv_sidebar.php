@@ -44,7 +44,7 @@ class sv_sidebar extends init {
 		add_shortcode( $this->get_module_name(), array( $this, 'shortcode' ) );
 	}
 
-	public function shortcode( $settings, $content = '' ) {
+	public function shortcode( $settings, $content = '' ) :string {
 		$settings								= shortcode_atts(
 			array(
 				'id'					    	=> false,
