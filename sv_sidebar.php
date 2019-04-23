@@ -2,7 +2,7 @@
 namespace sv_100;
 
 /**
- * @version         1.00
+ * @version		 1.00
  * @author			straightvisions
  * @package			sv_100
  * @copyright		2019 Matthias Bathke
@@ -12,17 +12,17 @@ namespace sv_100;
  */
 
 class sv_sidebar extends init {
-	protected static $sidebars                  = array();
-	protected static $custom_scripts            = array();
+	protected static $sidebars					= array();
+	protected static $custom_scripts			= array();
 
 	// Properties
-	protected $ID                               = false;
-	protected $name                             = false;
-	protected $description                      = false;
-	protected $before_widget                    = false;
-	protected $after_widget                     = false;
-	protected $before_title                     = false;
-	protected $after_title                      = false;
+	protected $ID								= false;
+	protected $title							= false;
+	protected $description						= false;
+	protected $before_widget					= false;
+	protected $after_widget						= false;
+	protected $before_title						= false;
+	protected $after_title						= false;
 
 
 	public function __construct() {
@@ -47,13 +47,13 @@ class sv_sidebar extends init {
 	public function shortcode( $settings, $content = '' ) :string {
 		$settings								= shortcode_atts(
 			array(
-				'id'					    	=> false,
+				'id'							=> false,
 			),
 			$settings,
 			$this->get_module_name()
 		);
 
-		$settings['id']                         = $this->get_prefix( $settings['id'] );
+		$settings['id']						 = $this->get_prefix( $settings['id'] );
 
 		ob_start();
 		include( $this->get_path( 'lib/frontend/tpl/default.php' ) );
@@ -72,35 +72,35 @@ class sv_sidebar extends init {
 
 	// Object Methods
 	public function create( $parent ) :sv_sidebar {
-		$new                                    = new static();
+		$new									= new static();
 
 		$new->set_root( $parent->get_root() );
 		$new->set_parent( $parent );
 
-		$new->ID                                = $this->get_prefix( $parent->get_module_name() );
+		$new->ID								= $this->get_prefix( $parent->get_module_name() );
 
 		return $new;
 	}
 
 	public function load_sidebar() :sv_sidebar {
-		$sidebar                = array(
-			'name'              => $this->get_name() ? $this->get_name() : $this->get_ID(),
-			'id'                => $this->get_ID(),
-			'description'       => $this->get_desc() ? $this->get_desc() : '',
-			'before_widget'     => $this->get_before_widget() ? $this->get_before_widget() : '<div id="%1$s" class="widget %2$s">',
-			'after_widget'      => $this->get_after_widget() ? $this->get_after_widget() : '</div>',
-			'before_title'      => $this->get_before_title() ? $this->get_before_title() : '<h3 class="' . $this->get_prefix() . '">',
-			'after_title'       => $this->get_after_title() ? $this->get_after_title() : '</h3>',
+		$sidebar				= array(
+			'name'			  => $this->get_title() ? $this->get_title() : $this->get_ID(),
+			'id'				=> $this->get_ID(),
+			'description'	   => $this->get_desc() ? $this->get_desc() : '',
+			'before_widget'	 => $this->get_before_widget() ? $this->get_before_widget() : '<div id="%1$s" class="widget %2$s">',
+			'after_widget'	  => $this->get_after_widget() ? $this->get_after_widget() : '</div>',
+			'before_title'	  => $this->get_before_title() ? $this->get_before_title() : '<h3 class="' . $this->get_prefix() . '">',
+			'after_title'	   => $this->get_after_title() ? $this->get_after_title() : '</h3>',
 		);
 
-		static::$sidebars[]     = $sidebar;
+		static::$sidebars[]	 = $sidebar;
 
 		return $this->get_root()->sv_sidebar;
 	}
 
 	// Setter & Getter
 	public function set_ID( string $ID ) :sv_sidebar {
-		$this->ID               = $this->get_ID() . '_' . $ID;
+		$this->ID			   = $this->get_ID() . '_' . $ID;
 
 		return $this;
 	}
@@ -109,18 +109,18 @@ class sv_sidebar extends init {
 		return $this->ID;
 	}
 
-	public function set_name( string $name ) :sv_sidebar {
-		$this->name                             = $name;
+	public function set_title( string $title ) :sv_sidebar {
+		$this->title							 = $title;
 
 		return $this;
 	}
 
-	public function get_name() :string {
-		return $this->name;
+	public function get_title() :string {
+		return $this->title;
 	}
 
 	public function set_desc( string $description ) :sv_sidebar {
-		$this->description                      = $description;
+		$this->description					  = $description;
 
 		return $this;
 	}
@@ -130,7 +130,7 @@ class sv_sidebar extends init {
 	}
 
 	public function set_before_widget( string $before_widget ) :sv_sidebar {
-		$this->before_widget                    = $before_widget;
+		$this->before_widget					= $before_widget;
 
 		return $this;
 	}
@@ -140,7 +140,7 @@ class sv_sidebar extends init {
 	}
 
 	public function set_after_widget( string $after_widget ) :sv_sidebar {
-		$this->after_widget                     = $after_widget;
+		$this->after_widget					 = $after_widget;
 
 		return $this;
 	}
@@ -150,7 +150,7 @@ class sv_sidebar extends init {
 	}
 
 	public function set_before_title( string $before_title ) :sv_sidebar {
-		$this->before_title                     = $before_title;
+		$this->before_title					 = $before_title;
 
 		return $this;
 	}
@@ -160,7 +160,7 @@ class sv_sidebar extends init {
 	}
 
 	public function set_after_title( string $after_title ) :sv_sidebar {
-		$this->after_title                      = $after_title;
+		$this->after_title					  = $after_title;
 
 		return $this;
 	}

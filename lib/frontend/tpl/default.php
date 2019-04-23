@@ -1,6 +1,6 @@
 <?php
 if ( is_active_sidebar( $settings['id'] ) ) {
-	echo '<div id="' . $settings['id'] . '" class="' . $this->get_prefix() . '">';
+	echo '<div class="' . $this->get_prefix() . ' ' . $settings['id'] . '">';
 	dynamic_sidebar( $settings['id'] );
 	echo '</div>';
 }
