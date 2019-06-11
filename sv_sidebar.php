@@ -84,16 +84,16 @@ class sv_sidebar extends init {
 
 	public function load_sidebar() :sv_sidebar {
 		$sidebar				= array(
-			'name'			  => $this->get_title() ? $this->get_title() : $this->get_ID(),
+			'name'			  	=> $this->get_title() ? $this->get_title() : $this->get_ID(),
 			'id'				=> $this->get_ID(),
-			'description'	   => $this->get_desc() ? $this->get_desc() : '',
-			'before_widget'	 => $this->get_before_widget() ? $this->get_before_widget() : '<div id="%1$s" class="widget %2$s">',
-			'after_widget'	  => $this->get_after_widget() ? $this->get_after_widget() : '</div>',
-			'before_title'	  => $this->get_before_title() ? $this->get_before_title() : '<h3 class="' . $this->get_prefix() . '">',
-			'after_title'	   => $this->get_after_title() ? $this->get_after_title() : '</h3>',
+			'description'	   	=> $this->get_desc() ? $this->get_desc() : '',
+			'before_widget'	 	=> $this->get_before_widget() ? $this->get_before_widget() : '<div id="%1$s" class="widget %2$s">',
+			'after_widget'	  	=> $this->get_after_widget() ? $this->get_after_widget() : '</div>',
+			'before_title'	  	=> $this->get_before_title() ? $this->get_before_title() : '<h3 class="' . $this->get_prefix() . '">',
+			'after_title'	   	=> $this->get_after_title() ? $this->get_after_title() : '</h3>',
 		);
 
-		static::$sidebars[]	 = $sidebar;
+		static::$sidebars[]	 	= $sidebar;
 
 		return $this->get_root()->sv_sidebar;
 	}
@@ -125,7 +125,7 @@ class sv_sidebar extends init {
 	public function clear_sidebar( string $sidebar ): sv_sidebar {
 		$sidebars_widgets 	= get_option( 'sidebars_widgets', array() );
 		
-		if ( $sidebars_widgets[ $sidebar ]  ) {
+		if ( isset( $sidebars_widgets[ $sidebar ] )  ) {
 			$sidebars_widgets[ $sidebar ] = array();
 			
 			update_option( 'sidebars_widgets', $sidebars_widgets );
