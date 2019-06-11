@@ -97,6 +97,42 @@ class sv_sidebar extends init {
 
 		return $this->get_root()->sv_sidebar;
 	}
+	
+	// Adds a widget to the given sidebar
+	public function add_widget_to_sidebar( string $widget_id, string $sidebar, $widget_data = false ): sv_sidebar {
+		$sidebars_widgets 	= get_option( 'sidebars_widgets', array() );
+		$widget_instances 	= get_option( 'widget_' . $widget_id, array() );
+		
+		if ( isset( $widget_instances ) ) {
+			$numeric_keys 	= array_filter( array_keys( $widget_instances ), 'is_int' );
+			$next_key 		= count( $numeric_keys ) + 1;
+			
+			if ( ! isset( $sidebars_widgets[ $sidebar ] ) ) {
+				$sidebars_widgets[ $sidebar ] = array();
+			}
+			
+			$sidebars_widgets[ $sidebar ][] = $widget_id . '-' . $next_key;
+			$widget_instances[ $next_key ] 	= $widget_data ? $widget_data : array();
+			
+			update_option( 'sidebars_widgets', $sidebars_widgets );
+			update_option( 'widget_' . $widget_id, $widget_instances );
+		}
+		
+		return $this;
+	}
+	
+	// Removes all widgets from the given sidebar
+	public function clear_sidebar( string $sidebar ): sv_sidebar {
+		$sidebars_widgets 	= get_option( 'sidebars_widgets', array() );
+		
+		if ( $sidebars_widgets[ $sidebar ]  ) {
+			$sidebars_widgets[ $sidebar ] = array();
+			
+			update_option( 'sidebars_widgets', $sidebars_widgets );
+		}
+		
+		return $this;
+	}
 
 	// Setter & Getter
 	public function set_ID( string $ID ) :sv_sidebar {
