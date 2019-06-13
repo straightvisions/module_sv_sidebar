@@ -24,11 +24,6 @@ class sv_sidebar extends init {
 	protected $before_title						= false;
 	protected $after_title						= false;
 
-
-	public function __construct() {
-
-	}
-
 	public function init() {
 		// Module Info
 		$this->set_module_title( 'SV Sidebar' );
@@ -36,12 +31,9 @@ class sv_sidebar extends init {
 
 		// Action Hooks
 		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
-
-		// Shortcodes
-		add_shortcode( $this->get_module_name(), array( $this, 'shortcode' ) );
 	}
 
-	public function shortcode( $settings, $content = '' ) :string {
+	public function load( $settings = array() ) :string {
 		$settings								= shortcode_atts(
 			array(
 				'id'							=> false,
