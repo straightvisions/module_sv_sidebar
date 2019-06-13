@@ -29,13 +29,10 @@ class sv_sidebar extends init {
 
 	}
 
-	public function init(){
-		// Translates the module
-		load_theme_textdomain( 'sv_sidebar', $this->get_path( 'languages' ) );
-
+	public function init() {
 		// Module Info
 		$this->set_module_title( 'SV Sidebar' );
-		$this->set_module_desc( __( 'This module gives the ability to display sidebars via the "[sv_sidebar]" shortcode.', 'sv_sidebar' ) );
+		$this->set_module_desc( __( 'This module gives the ability to display sidebars via the "[sv_sidebar]" shortcode.', 'sv_100' ) );
 
 		// Action Hooks
 		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
