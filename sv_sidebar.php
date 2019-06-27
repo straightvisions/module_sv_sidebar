@@ -27,7 +27,7 @@ class sv_sidebar extends init {
 	public function init() {
 		// Module Info
 		$this->set_module_title( 'SV Sidebar' );
-		$this->set_module_desc( __( 'This module gives the ability to display sidebars via the "[sv_sidebar]" shortcode.', 'straightvisions_100' ) );
+		$this->set_module_desc( __( 'This module gives the ability to display sidebars via the "[sv_sidebar]" shortcode.', 'straightvisions-100' ) );
 
 		// Action Hooks
 		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
