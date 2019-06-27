@@ -1,10 +1,10 @@
 <?php
-namespace sv_100;
+namespace sv100;
 
 /**
  * @version		 1.00
  * @author			straightvisions
- * @package			sv_100
+ * @package			sv100
  * @copyright		2019 Matthias Bathke
  * @link			https://straightvisions.com
  * @since			1.0
@@ -27,7 +27,7 @@ class sv_sidebar extends init {
 	public function init() {
 		// Module Info
 		$this->set_module_title( 'SV Sidebar' );
-		$this->set_module_desc( __( 'This module gives the ability to display sidebars via the "[sv_sidebar]" shortcode.', 'straightvisions-100' ) );
+		$this->set_module_desc( __( 'This module gives the ability to display sidebars via the "[sv_sidebar]" shortcode.', 'sv100' ) );
 
 		// Action Hooks
 		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
