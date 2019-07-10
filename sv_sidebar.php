@@ -84,7 +84,7 @@ class sv_sidebar extends init {
 
 		static::$sidebars[]	 	= $sidebar;
 
-		return $this->get_root()->sv_sidebar;
+		return $this;
 	}
 	
 	// Adds a widget to the given sidebar
