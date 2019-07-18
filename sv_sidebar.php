@@ -25,15 +25,21 @@
 		protected $after_title						= false;
 	
 		public function init() {
-			// Module Info
-			$this->set_module_title( 'SV Sidebar' );
-			$this->set_module_desc( __( 'This module gives the ability to display sidebars via the "[sv_sidebar]" shortcode.', 'sv100' ) );
+			$this->set_module_title( 'SV Sidebar' )
+				 ->set_module_desc( __( 'Creates and manages sidebars.', 'sv100' ) );
 	
 			// Action Hooks
 			add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
 		}
+		
+		// Registers all created sidebars
+		public function register_sidebars() {
+			foreach ( static::$sidebars as $sidebar ) {
+				register_sidebar( $sidebar );
+			}
+		}
 	
-		public function load( $settings = array() ) :string {
+		public function load( $settings = array() ): string {
 			$settings								= shortcode_atts(
 				array(
 					'id'							=> false,
@@ -50,13 +56,6 @@
 			ob_end_clean();
 	
 			return $output;
-		}
-	
-		// Registers all created sidebars
-		public function register_sidebars() {
-			foreach ( static::$sidebars as $sidebar ) {
-				register_sidebar( $sidebar );
-			}
 		}
 	
 		// Object Methods
@@ -124,18 +123,18 @@
 		}
 	
 		// Setter & Getter
-		public function set_ID( string $ID ) :sv_sidebar {
-			$this->ID			   = $this->get_ID() . '_' . $ID;
+		public function set_ID( string $ID ): sv_sidebar {
+			$this->ID = $this->get_ID() . '_' . $ID;
 	
 			return $this;
 		}
 	
-		public function get_ID() :string {
+		public function get_ID(): string {
 			return $this->ID;
 		}
 	
-		public function set_title( string $title ) :sv_sidebar {
-			$this->title							= $title;
+		public function set_title( string $title ): sv_sidebar {
+			$this->title = $title;
 	
 			return $this;
 		}
@@ -144,8 +143,8 @@
 			return $this->title;
 		}
 	
-		public function set_desc( string $description ) :sv_sidebar {
-			$this->description					  	= $description;
+		public function set_desc( string $description ): sv_sidebar {
+			$this->description = $description;
 	
 			return $this;
 		}
@@ -154,43 +153,43 @@
 			return $this->description;
 		}
 	
-		public function set_before_widget( string $before_widget ) :sv_sidebar {
-			$this->before_widget					= $before_widget;
+		public function set_before_widget( string $before_widget ): sv_sidebar {
+			$this->before_widget = $before_widget;
 	
 			return $this;
 		}
 	
-		public function get_before_widget() :string {
+		public function get_before_widget(): string {
 			return $this->before_widget;
 		}
 	
-		public function set_after_widget( string $after_widget ) :sv_sidebar {
-			$this->after_widget					 	= $after_widget;
+		public function set_after_widget( string $after_widget ): sv_sidebar {
+			$this->after_widget = $after_widget;
 	
 			return $this;
 		}
 	
-		public function get_after_widget() :string {
+		public function get_after_widget(): string {
 			return $this->after_widget;
 		}
 	
-		public function set_before_title( string $before_title ) :sv_sidebar {
-			$this->before_title					 	= $before_title;
+		public function set_before_title( string $before_title ): sv_sidebar {
+			$this->before_title = $before_title;
 	
 			return $this;
 		}
 	
-		public function get_before_title() :string {
+		public function get_before_title(): string {
 			return $this->before_title;
 		}
 	
-		public function set_after_title( string $after_title ) :sv_sidebar {
-			$this->after_title					  	= $after_title;
+		public function set_after_title( string $after_title ): sv_sidebar {
+			$this->after_title = $after_title;
 	
 			return $this;
 		}
 	
-		public function get_after_title() :string {
+		public function get_after_title(): string {
 			return $this->after_title;
 		}
 	}
