@@ -64,8 +64,7 @@
 	
 			$new->set_root( $parent->get_root() );
 			$new->set_parent( $parent );
-	
-			$new->ID								= $this->get_prefix( $parent->get_module_name() );
+			$new->set_ID( $this->get_prefix( $parent->get_module_name() ) );
 	
 			return $new;
 		}
@@ -123,8 +122,39 @@
 		}
 	
 		// Setter & Getter
+		public function get_sidebars( $parent = false ): array {
+			$sidebars = $this::$sidebars;
+			
+			if ( $parent ) {
+				$sidebars = array_filter( $sidebars, function ( $sidebar ) use ( $parent ) {
+					if ( strpos( $sidebar['id'], $parent->get_module_name() ) ) {
+						return true;
+					}
+					
+					return false;
+				});
+			}
+			
+			return $sidebars;
+		}
+		
 		public function set_ID( string $ID ): sv_sidebar {
-			$this->ID = $this->get_ID() . '_' . $ID;
+			if ( $this->get_ID() ) {
+				$this->ID = $this->get_ID() . '_' . $ID;
+			} else {
+				$this->ID = $ID;
+			}
+
+			$this->get_parent()
+				 ->get_setting( $this->get_ID() )
+				 ->set_description( __( 'Widget alignment inside this Sidebar.', 'sv100' ) )
+				 ->set_options( array(
+				 	'left'		=> __( 'Left', 'sv100' ),
+					'center'	=> __( 'Center', 'sv100' ),
+					'right'		=> __( 'Right', 'sv100' )
+				 ) )
+				 ->set_default_value( 'left' )
+				 ->load_type( 'select' );
 	
 			return $this;
 		}
@@ -135,7 +165,11 @@
 	
 		public function set_title( string $title ): sv_sidebar {
 			$this->title = $title;
-	
+			
+			$this->get_parent()
+				 ->get_setting( $this->get_ID() )
+				 ->set_title( $this->get_title() );
+			
 			return $this;
 		}
 	
