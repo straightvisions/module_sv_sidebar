@@ -25,7 +25,7 @@
 		protected $after_title						= false;
 	
 		public function init() {
-			$this->set_module_title( 'SV Sidebar' )
+			$this->set_module_title( __( 'SV Sidebar', 'sv100' ) )
 				 ->set_module_desc( __( 'Creates and manages sidebars.', 'sv100' ) );
 	
 			// Action Hooks
@@ -40,15 +40,15 @@
 		}
 	
 		public function load( $settings = array() ): string {
-			$settings								= shortcode_atts(
+			$settings							= shortcode_atts(
 				array(
-					'id'							=> false,
+					'id'						=> false,
 				),
 				$settings,
 				$this->get_module_name()
 			);
 	
-			$settings['id']						 = $this->get_prefix( $settings['id'] );
+			$settings['id']						= $this->get_prefix( $settings['id'] );
 	
 			ob_start();
 			include( $this->get_path( 'lib/frontend/tpl/default.php' ) );
@@ -74,10 +74,18 @@
 				'name'			  	=> $this->get_title() ? $this->get_title() : $this->get_ID(),
 				'id'				=> $this->get_ID(),
 				'description'	   	=> $this->get_desc() ? $this->get_desc() : '',
-				'before_widget'	 	=> $this->get_before_widget() ? $this->get_before_widget() : '<div id="%1$s" class="widget %2$s">',
-				'after_widget'	  	=> $this->get_after_widget() ? $this->get_after_widget() : '</div>',
-				'before_title'	  	=> $this->get_before_title() ? $this->get_before_title() : '<h3 class="' . $this->get_prefix() . '">',
-				'after_title'	   	=> $this->get_after_title() ? $this->get_after_title() : '</h3>',
+				'before_widget'	 	=> $this->get_before_widget()
+					? $this->get_before_widget()
+					: '<div id="%1$s" class="widget %2$s">',
+				'after_widget'	  	=> $this->get_after_widget()
+					? $this->get_after_widget()
+					: '</div>',
+				'before_title'	  	=> $this->get_before_title()
+					? $this->get_before_title()
+					: '<h3 class="' . $this->get_prefix() . '">',
+				'after_title'	   	=> $this->get_after_title()
+					? $this->get_after_title()
+					: '</h3>',
 			);
 	
 			static::$sidebars[]	 	= $sidebar;
