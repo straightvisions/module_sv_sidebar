@@ -72,27 +72,6 @@
 	margin-left: 1rem;
 }
 
-.sv100_sv_sidebar .widget_archive a,
-.sv100_sv_sidebar .widget_categories a,
-.sv100_sv_sidebar .widget_pages a,
-.sv100_sv_sidebar .widget_meta a,
-.sv100_sv_sidebar .widget_nav_menu a {
-	text-decoration: none;
-}
-
-.sv100_sv_sidebar .widget_archive a:focus,
-.sv100_sv_sidebar .widget_archive a:hover,
-.sv100_sv_sidebar .widget_categories a:focus,
-.sv100_sv_sidebar .widget_categories a:hover,
-.sv100_sv_sidebar .widget_pages a:focus,
-.sv100_sv_sidebar .widget_pages a:hover,
-.sv100_sv_sidebar .widget_meta a:focus,
-.sv100_sv_sidebar .widget_meta a:hover,
-.sv100_sv_sidebar .widget_nav_menu a:focus,
-.sv100_sv_sidebar .widget_nav_menu a:hover {
-	text-decoration: underline;
-}
-
 /* Calendar -------------------------- */
 .sv100_sv_sidebar .calendar_wrap th,
 .sv100_sv_sidebar .calendar_wrap td,
@@ -114,11 +93,6 @@
 
 .sv100_sv_sidebar .calendar_wrap tfoot td {
 	border-bottom: none;
-}
-
-.sv100_sv_sidebar .calendar_wrap tfoot a,
-.sv100_sv_sidebar .calendar_wrap .wp-calendar-nav a {
-	text-decoration: none;
 }
 
 .sv100_sv_sidebar .calendar_wrap tfoot #prev,
@@ -144,41 +118,10 @@
 	padding: 0 .4em;
 }
 
-/* Nav Menu -------------------------- */
-
-
-/* Recent Comments ------------------- */
-.sv100_sv_sidebar .widget_recent_comments a {
-	text-decoration: none;
-}
-
-.sv100_sv_sidebar .widget_recent_comments a:focus,
-.sv100_sv_sidebar .widget_recent_comments a:hover {
-	text-decoration: underline;
-}
-
-/* Recent Entries -------------------- */
-.sv100_sv_sidebar .widget_recent_entries a {
-	text-decoration: none;
-}
-
-.sv100_sv_sidebar .widget_recent_entries a:focus,
-.sv100_sv_sidebar .widget_recent_entries a:hover {
-	text-decoration: underline;
-}
 
 /* RSS ------------------------------- */
 .sv100_sv_sidebar .widget_rss .widget-title a.rsswidget:first-of-type {
 	display: none;
-}
-
-.sv100_sv_sidebar .widget_rss a {
-	text-decoration: none;
-}
-
-.sv100_sv_sidebar .widget_rss a:focus,
-.sv100_sv_sidebar .widget_rss a:hover {
-	text-decoration: underline;
 }
 
 .sv100_sv_sidebar .widget_rss .rssSummary {
@@ -194,10 +137,14 @@
     display: flex;
 }
 
+.sv100_sv_sidebar .widget_search .screen-reader-text {
+	display: none;
+}
+
 .sv100_sv_sidebar .widget_search input {
-    border: 1px solid #eee;
+	border-width: 1px;
+	border-style: solid;
     background: transparent;
-    color: #fff;
     padding: .3rem .5rem;
     height: 2.5rem;
     transition: .3s ease;
@@ -213,11 +160,5 @@
 .sv100_sv_sidebar .widget_tag_cloud a {
 	font-weight: 700;
 	margin-right: .5rem;
-	text-decoration: none;
 	white-space: nowrap;
-}
-
-.sv100_sv_sidebar .widget_tag_cloud a:focus,
-.sv100_sv_sidebar .widget_tag_cloud a:hover {
-	text-decoration: underline;
 }
