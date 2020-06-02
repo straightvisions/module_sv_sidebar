@@ -15,9 +15,9 @@
 	margin: .3rem 0 0 0;
 }
 
-.sv100_sv_sidebar .widget li:first-child,
-.sv100_sv_sidebar .widget li > ul,
-.sv100_sv_sidebar .widget li > ol {
+.sv100_sv_sidebar .widget > li:first-child,
+.sv100_sv_sidebar .widget > li > ul,
+.sv100_sv_sidebar .widget > li > ol {
 	margin-top: 0;
 }
 
