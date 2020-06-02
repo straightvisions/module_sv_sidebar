@@ -2,7 +2,7 @@
 	namespace sv100;
 	
 	/**
-	 * @version         4.012
+	 * @version         4.013
 	 * @author			straightvisions GmbH
 	 * @package			sv100
 	 * @copyright		2019 straightvisions GmbH
@@ -26,10 +26,19 @@
 	
 		public function init() {
 			$this->set_module_title( __( 'SV Sidebar', 'sv100' ) )
-				 ->set_module_desc( __( 'Creates and manages sidebars.', 'sv100' ) );
+				 ->set_module_desc( __( 'Creates and manages sidebars.', 'sv100' ) )
+				 ->register_scripts();
 	
 			// Action Hooks
 			add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
+		}
+
+		protected function register_scripts(): sv_sidebar {
+			// Register Styles
+			$this->get_script( 'common' )
+				->set_path( 'lib/frontend/css/common.css' );
+	
+			return $this;
 		}
 		
 		// Registers all created sidebars
@@ -82,7 +91,7 @@
 					: '</div>',
 				'before_title'	  	=> $this->get_before_title()
 					? $this->get_before_title()
-					: '<h3 class="' . $this->get_prefix() . '">',
+					: '<h3 class="widget-title ' . $this->get_prefix() . '">',
 				'after_title'	   	=> $this->get_after_title()
 					? $this->get_after_title()
 					: '</h3>',
