@@ -148,10 +148,9 @@
 .sv100_sv_sidebar .widget_search input {
 	border-width: 1px;
 	border-style: solid;
-    background: transparent;
+    background-color: transparent;
     padding: .3rem .5rem;
     height: 2.5rem;
-    transition: .3s ease;
 }
 
 .sv100_sv_sidebar .widget_search input.search-submit {
@@ -165,4 +164,9 @@
 	font-weight: 700;
 	margin-right: .5rem;
 	white-space: nowrap;
+}
+
+/* Textwidget */
+.sv100_sv_sidebar .textwidget{
+	display:inline-block;
 }
