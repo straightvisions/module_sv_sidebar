@@ -15,9 +15,6 @@
 	margin:0;
 	padding:0;
 }
-.sv100_sv_sidebar .widget li {
-	margin: .3rem 0 0 0;
-}
 
 .sv100_sv_sidebar .widget > li:first-child,
 .sv100_sv_sidebar .widget > li > ul,
