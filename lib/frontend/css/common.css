@@ -1,15 +1,12 @@
 /* Widget Base ------------------------------- */
 .sv100_sv_sidebar .widget {
-	margin-top: 2rem;
+	margin-bottom: 20px;
 }
 
 .sv100_sv_sidebar .widget:first-child {
 	margin-top: 0;
 }
 
-.sv100_sv_sidebar .widget .widget-title {
-	margin: 0 0 1rem;
-}
 .sv100_sv_sidebar .widget ul {
 	list-style-type:none;
 	margin:0;
