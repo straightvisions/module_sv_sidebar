@@ -1,16 +1,6 @@
 <?php
 	namespace sv100;
-	
-	/**
-	 * @version         4.013
-	 * @author			straightvisions GmbH
-	 * @package			sv100
-	 * @copyright		2019 straightvisions GmbH
-	 * @link			https://straightvisions.com
-	 * @since			1.000
-	 * @license			See license.txt or https://straightvisions.com
-	 */
-	
+
 	class sv_sidebar extends init {
 		protected static $sidebars					= array();
 		protected static $custom_scripts			= array();
@@ -26,8 +16,7 @@
 	
 		public function init() {
 			$this->set_module_title( __( 'SV Sidebar', 'sv100' ) )
-				 ->set_module_desc( __( 'Creates and manages sidebars.', 'sv100' ) )
-				 ->register_scripts();
+				 ->set_module_desc( __( 'Creates and manages sidebars.', 'sv100' ) );
 	
 			// Action Hooks
 			add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
@@ -35,15 +24,6 @@
 			// disable block based sidebars/widgets, as some kind of bug results in some sidebars not displayed on admin screen
 			remove_theme_support( 'widgets-block-editor' );
 		}
-
-		protected function register_scripts(): sv_sidebar {
-			// Register Styles
-			$this->get_script( 'common' )
-				->set_path( 'lib/frontend/css/common.css' );
-	
-			return $this;
-		}
-		
 		// Registers all created sidebars
 		public function register_sidebars() {
 			foreach ( static::$sidebars as $sidebar ) {
@@ -63,10 +43,9 @@
 			$settings['id']						= $this->get_prefix( $settings['id'] );
 	
 			ob_start();
-			include( $this->get_path( 'lib/frontend/tpl/default.php' ) );
-			$output									= ob_get_contents();
-			ob_end_clean();
-	
+			include( $this->get_path( 'lib/tpl/frontend/default.php' ) );
+			$output									= ob_get_clean();
+
 			return $output;
 		}
 	

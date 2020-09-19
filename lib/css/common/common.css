@@ -21,9 +21,9 @@
 
 .sv100_sv_sidebar .widget table caption {
 	font-weight: 700;
-    font-size: 1.2em;
-    margin-bottom: .5rem;
-    background-color: transparent;
+	font-size: 1.2em;
+	margin-bottom: .5rem;
+	background-color: transparent;
 }
 
 .sv100_sv_sidebar .widget .post-date,
@@ -47,11 +47,11 @@
 .sv100_sv_sidebar .widget_recent_comments ul,
 .sv100_sv_sidebar .widget_recent_entries ul,
 .sv100_sv_sidebar .widget_rss ul {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 	list-style: none;
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .sv100_sv_sidebar .widget_archive li,
@@ -105,8 +105,8 @@
 
 /* Gallery --------------------------- */
 .sv100_sv_sidebar .widget_media_gallery .gallery {
-    display: flex;
-    flex-wrap: wrap;
+	display: flex;
+	flex-wrap: wrap;
 	margin: 0 -.4em -.8em -.4em;
 	width: calc(100% + .8em);
 }
@@ -132,7 +132,7 @@
 
 /* Search ---------------------------- */
 .sv100_sv_sidebar .widget_search form {
-    display: flex;
+	display: flex;
 }
 
 .sv100_sv_sidebar .widget_search .screen-reader-text {
@@ -142,15 +142,15 @@
 .sv100_sv_sidebar .widget_search input {
 	border-width: 1px;
 	border-style: solid;
-    background-color: transparent;
-    padding: .3rem .5rem;
-    height: 2.5rem;
+	background-color: transparent;
+	padding: .3rem .5rem;
+	height: 2.5rem;
 }
 
 .sv100_sv_sidebar .widget_search input.search-submit {
-    border-left: 0;
-    padding: .3rem .8rem;
-    cursor: pointer;
+	border-left: 0;
+	padding: .3rem .8rem;
+	cursor: pointer;
 }
 
 /* Tag Cloud ------------------------- */
