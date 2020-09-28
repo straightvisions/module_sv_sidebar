@@ -45,6 +45,8 @@
 				$this->get_module_name()
 			);
 
+			$settings['id']						= $this->get_prefix( $settings['id'] );
+
 			if ( !is_active_sidebar( $settings['id'] ) ) {
 				return '';
 			}
@@ -56,8 +58,6 @@
 					$script->set_is_enqueued();
 				}
 			}
-	
-			$settings['id']						= $this->get_prefix( $settings['id'] );
 	
 			ob_start();
 			include( $this->get_path( 'lib/tpl/frontend/default.php' ) );
