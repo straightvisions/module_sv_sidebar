@@ -37,14 +37,6 @@
 		}
 	
 		public function load( $settings = array() ): string {
-			if(!is_admin()){
-				$this->load_settings()->register_scripts();
-
-				foreach($this->get_scripts() as $script){
-					$script->set_is_enqueued();
-				}
-			}
-
 			$settings							= shortcode_atts(
 				array(
 					'id'						=> false,
@@ -52,6 +44,18 @@
 				$settings,
 				$this->get_module_name()
 			);
+
+			if ( !is_active_sidebar( $settings['id'] ) ) {
+				return '';
+			}
+
+			if(!is_admin()){
+				$this->load_settings()->register_scripts();
+
+				foreach($this->get_scripts() as $script){
+					$script->set_is_enqueued();
+				}
+			}
 	
 			$settings['id']						= $this->get_prefix( $settings['id'] );
 	
