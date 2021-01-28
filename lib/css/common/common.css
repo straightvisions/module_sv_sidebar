@@ -46,22 +46,6 @@
 	padding: 0;
 }
 
-.sv100_sv_sidebar .widget_archive li,
-.sv100_sv_sidebar .widget_categories li,
-.sv100_sv_sidebar .widget_pages li,
-.sv100_sv_sidebar .widget_meta li,
-.sv100_sv_sidebar .widget_nav_menu li {
-	margin: .3rem 0 0 0;
-}
-
-.sv100_sv_sidebar .widget_archive li li,
-.sv100_sv_sidebar .widget_categories li li,
-.sv100_sv_sidebar .widget_pages li li,
-.sv100_sv_sidebar .widget_meta li li,
-.sv100_sv_sidebar .widget_nav_menu li li {
-	margin-left: 1rem;
-}
-
 /* Calendar -------------------------- */
 .sv100_sv_sidebar .calendar_wrap th,
 .sv100_sv_sidebar .calendar_wrap td,
