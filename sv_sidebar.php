@@ -32,18 +32,8 @@
 			}
 		}
 	
-		public function load( $settings = array() ): string {
-			$settings							= shortcode_atts(
-				array(
-					'id'						=> false,
-				),
-				$settings,
-				$this->get_module_name()
-			);
-
-			$settings['id']						= $this->get_prefix( $settings['id'] );
-
-			if ( !is_active_sidebar( $settings['id'] ) ) {
+		public function load( string $ID ): string {
+			if ( !is_active_sidebar( $ID ) ) {
 				return '';
 			}
 
@@ -63,12 +53,12 @@
 		}
 	
 		// Object Methods
-		public function create( $parent ): sv_sidebar {
+		public function create( $parent, string $ID ): sv_sidebar {
 			$new									= new static();
 	
 			$new->set_root( $parent->get_root() );
 			$new->set_parent( $parent );
-			$new->set_ID( $this->get_prefix( $parent->get_module_name() ) );
+			$new->set_ID( $ID );
 	
 			return $new;
 		}
@@ -94,7 +84,7 @@
 
 			static::$sidebars[]	 	= $sidebar;
 	
-			return $this->get_module( 'sv_sidebar' );
+			return $this;
 		}
 		
 		// Adds a widget to the given sidebar
