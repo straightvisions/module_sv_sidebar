@@ -53,13 +53,13 @@
 		}
 	
 		// Object Methods
-		public function create( $parent ): sv_sidebar {
+		public function create( $parent, string $ID ): sv_sidebar {
 			$new									= new static();
-			
+	
 			$new->set_root( $parent->get_root() );
 			$new->set_parent( $parent );
-			$new->set_ID( $this->get_prefix( $parent->get_module_name() ) );
-			
+			$new->set_ID( $ID );
+	
 			return $new;
 		}
 	
