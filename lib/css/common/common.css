@@ -137,6 +137,7 @@
 }
 
 /* Textwidget */
-.sv100_sv_sidebar .textwidget{
-	display:inline-block;
+.sv100_sv_sidebar .textwidget img{
+	max-width:100%;
+	height:auto;
 }
