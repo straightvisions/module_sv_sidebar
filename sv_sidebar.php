@@ -46,7 +46,7 @@
 			}
 	
 			ob_start();
-			include( $this->get_path( 'lib/tpl/frontend/default.php' ) );
+			require( $this->get_path( 'lib/tpl/frontend/default.php' ) );
 			$output									= ob_get_clean();
 
 			return $output;
