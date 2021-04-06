@@ -21,9 +21,6 @@
 	
 			// Action Hooks
 			add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
-
-			// disable block based sidebars/widgets, as some kind of bug results in some sidebars not displayed on admin screen
-			remove_theme_support( 'widgets-block-editor' );
 		}
 		// Registers all created sidebars
 		public function register_sidebars() {
