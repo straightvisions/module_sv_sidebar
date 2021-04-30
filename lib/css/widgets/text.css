@@ -1,0 +1,28 @@
+.widget_text a,
+.widget_tag_cloud a {
+	text-decoration: underline;
+}
+
+.widget_text a:hover,
+.widget_text a:focus,
+.widget_tag_cloud a:hover,
+.widget_tag_cloud a:focus {
+	text-decoration: none;
+}
+
+.widget_text ul {
+	list-style-type: disc;
+	padding-left: 18px;
+}
+
+.widget_text ol {
+	padding-left: 18px;
+	list-style-type: decimal;
+}
+
+.widget.widget_text ul > li,
+.widget.widget_text ol > li {
+	display: list-item;
+	cursor: text;
+	background-color: transparent;
+}

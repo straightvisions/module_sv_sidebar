@@ -1,0 +1,32 @@
+.widget_rss ul li {
+	flex-direction: column;
+	flex-wrap: wrap;
+	display: flex;
+	align-items: flex-start;
+	padding: 15px;
+	width: 100%;
+	cursor: text;
+	margin-bottom: 10px;
+}
+
+.widget_rss ul li > a.rsswidget {
+	padding: 0;
+	font-weight: bold;
+	font-size: 1.1rem;
+}
+
+.widget_rss ul li > span.rss-date {
+	font-size: .9rem;
+	margin-top: .3em;
+}
+
+.widget_rss ul li > div.rssSummary {
+	margin-top: .5em;
+}
+
+.widget_rss ul li > cite {
+	margin-top: .5em;
+	font-size: .9rem;
+	font-weight: bold;
+	font-style: italic;
+}
