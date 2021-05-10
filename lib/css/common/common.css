@@ -11,10 +11,6 @@
 }
 
 /* Widgets  - General */
-.sv100_sv_sidebar .widget {
-	margin-bottom: 30px;
-}
-
 .sv100_sv_sidebar .widget a {
 	text-decoration: none;
 	transition: .25s ease;
@@ -25,7 +21,7 @@
 	list-style-type: none;
 }
 
-.sv100_sv_sidebar .widget ul li {
+.sv100_sv_sidebar .widget > ul > li {
 	margin-bottom: .3em;
 	display: flex;
 	flex-direction:column;
