@@ -183,6 +183,21 @@
 
 			return $sidebars_array;
 		}
+
+		public function get_sidebars_for_metabox_options( $parent = false ): array {
+			$sidebars = $this::get_sidebars($parent);
+
+			$sidebars_array		= array(
+				''			=> __('Inherit', 'sv100'),
+				'0'			=> __('Hidden', 'sv100'),
+			);
+
+			foreach($sidebars as $sidebar){
+				$sidebars_array[$sidebar['id']]		= $sidebar['name'];
+			}
+
+			return $sidebars_array;
+		}
 		
 		public function set_ID( string $ID ): sv_sidebar {
 			if ( $this->get_ID() ) {
