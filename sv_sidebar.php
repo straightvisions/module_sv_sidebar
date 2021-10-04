@@ -47,7 +47,7 @@
 				->set_title( __( 'Sidebar ID', 'sv100' ) )
 				->set_description( __( 'The unique ID of the sidebar.', 'sv100' ) )
 				->set_required(true)
-				->load_type( 'text' )
+				->load_type( 'id' )
 				->set_placeholder( __( 'ID', 'sv100' ) );
 
 			$this->get_setting( 'sidebars' )
