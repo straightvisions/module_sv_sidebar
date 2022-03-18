@@ -22,7 +22,7 @@
 }
 
 .sv100_sv_sidebar .widget > ul > li {
-	margin-bottom: .3em;
+	margin-bottom: 20px;
 	display: flex;
 	flex-direction:column;
 	align-content: flex-start;
