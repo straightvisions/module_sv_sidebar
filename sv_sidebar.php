@@ -1,16 +1,6 @@
 <?php
 	namespace sv100;
-	
-	/**
-	 * @version         4.012
-	 * @author			straightvisions GmbH
-	 * @package			sv100
-	 * @copyright		2019 straightvisions GmbH
-	 * @link			https://straightvisions.com
-	 * @since			1.000
-	 * @license			See license.txt or https://straightvisions.com
-	 */
-	
+
 	class sv_sidebar extends init {
 		protected static $sidebars					= array();
 		protected static $custom_scripts			= array();
@@ -26,12 +16,75 @@
 	
 		public function init() {
 			$this->set_module_title( __( 'SV Sidebar', 'sv100' ) )
-				 ->set_module_desc( __( 'Creates and manages sidebars.', 'sv100' ) );
+				->set_module_desc( __( 'Creates and manages sidebars.', 'sv100' ) )
+				->load_settings()
+				->set_css_cache_active()
+				->set_section_title( $this->get_module_title() )
+				->set_section_desc( $this->get_module_desc() )
+				->set_section_template_path()
+				->set_section_order(3000)
+				->set_section_icon('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0v24h24v-24h-24zm11 22h-9v-16h9v16zm11 0h-9v-7h9v7zm0-9h-9v-7h9v7z"/></svg>')
+				->load_sidebars()
+				->get_root()
+				->add_section( $this );
 	
 			// Action Hooks
 			add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
+
+			// disable block based sidebars/widgets, as some kind of bug results in some sidebars not displayed on admin screen
+			remove_theme_support( 'widgets-block-editor' );
 		}
-		
+		protected function load_settings(): sv_sidebar{
+			$this->get_setting('sidebars')
+				->set_title(__('Register Sidebars'))
+				->set_description(__('Create unlimited Sidebars for use in Theme Modules', 'sv100'))
+				->load_type('group');
+
+			$this->get_setting( 'sidebars' )
+				->run_type()
+				->add_child()
+				->set_ID( 'ID' )
+				->set_title( __( 'Sidebar ID', 'sv100' ) )
+				->set_description( __( 'The unique ID of the sidebar.', 'sv100' ) )
+				->set_required(true)
+				->load_type( 'id' )
+				->set_placeholder( __( 'ID', 'sv100' ) );
+
+			$this->get_setting( 'sidebars' )
+				->run_type()
+				->add_child()
+				->set_ID( 'entry_label' )
+				->set_title( __( 'Sidebar Label', 'sv100' ) )
+				->set_description( __( 'A label to differentiate your sidebars.', 'sv100' ) )
+				->set_required(true)
+				->load_type( 'text' )
+				->set_placeholder( __( 'Label', 'sv100' ) );
+
+			$this->get_setting( 'sidebars' )
+				->run_type()
+				->add_child()
+				->set_ID( 'Description' )
+				->set_title( __( 'Sidebar Description', 'sv100' ) )
+				->set_description( __( 'Description of the sidebar.', 'sv100' ) )
+				->load_type( 'text' )
+				->set_placeholder( __( 'Description', 'sv100' ) );
+
+			return $this;
+		}
+		protected function load_sidebars(): sv_sidebar{
+			$sidebars = $this->get_setting('sidebars')->get_data();
+
+			if($sidebars && is_array($sidebars) && count($sidebars) > 0){
+				foreach($sidebars as $sidebar){
+					$this->create( $this, $this->get_prefix($sidebar['id']) )
+						->set_title( $sidebar['entry_label'] )
+						->set_desc( isset($sidebar['description']) ? $sidebar['description'] : '' )
+						->load_sidebar();
+				}
+			}
+
+			return $this;
+		}
 		// Registers all created sidebars
 		public function register_sidebars() {
 			foreach ( static::$sidebars as $sidebar ) {
@@ -39,32 +92,43 @@
 			}
 		}
 	
-		public function load( $settings = array() ): string {
-			$settings							= shortcode_atts(
-				array(
-					'id'						=> false,
-				),
-				$settings,
-				$this->get_module_name()
-			);
-	
-			$settings['id']						= $this->get_prefix( $settings['id'] );
+		public function load( string $ID ): string {
+			if ( !is_active_sidebar( $ID ) ) {
+				return '';
+			}
+
+			if(!is_admin()){
+				$this->load_settings()->register_scripts();
+
+				foreach($this->get_scripts() as $script){
+					$script->set_is_enqueued();
+				}
+
+				// conditionally load Custom CSS for active Widgets
+				if(isset(wp_get_sidebars_widgets()[$ID])){
+					foreach(wp_get_sidebars_widgets()[$ID] as $widget){
+						$slug		= _get_widget_id_base($widget);
+						$this->get_script( 'widget_'.$slug )
+							->set_path( 'lib/css/widgets/'.$slug.'.css' )
+							->set_is_enqueued();
+					}
+				}
+			}
 	
 			ob_start();
-			include( $this->get_path( 'lib/frontend/tpl/default.php' ) );
-			$output									= ob_get_contents();
-			ob_end_clean();
-	
+			require( $this->get_path( 'lib/tpl/frontend/default.php' ) );
+			$output									= ob_get_clean();
+
 			return $output;
 		}
 	
 		// Object Methods
-		public function create( $parent ): sv_sidebar {
+		public function create( $parent, string $ID ): sv_sidebar {
 			$new									= new static();
 	
 			$new->set_root( $parent->get_root() );
 			$new->set_parent( $parent );
-			$new->set_ID( $this->get_prefix( $parent->get_module_name() ) );
+			$new->set_ID( $ID );
 	
 			return $new;
 		}
@@ -82,54 +146,17 @@
 					: '</div>',
 				'before_title'	  	=> $this->get_before_title()
 					? $this->get_before_title()
-					: '<h3 class="' . $this->get_prefix() . '">',
+					: '<h3 class="widget-title ' . $this->get_prefix() . '">',
 				'after_title'	   	=> $this->get_after_title()
 					? $this->get_after_title()
 					: '</h3>',
 			);
-	
+
 			static::$sidebars[]	 	= $sidebar;
 	
-			return $this->get_module( 'sv_sidebar' );
-		}
-		
-		// Adds a widget to the given sidebar
-		public function add_widget_to_sidebar( string $widget_id, string $sidebar, $widget_data = false ): sv_sidebar {
-			$sidebars_widgets 	= get_option( 'sidebars_widgets', array() );
-			$widget_instances 	= get_option( 'widget_' . $widget_id, array() );
-			
-			if ( isset( $widget_instances ) ) {
-				$numeric_keys 	= array_filter( array_keys( $widget_instances ), 'is_int' );
-				$next_key 		= count( $numeric_keys ) + 1;
-				
-				if ( ! isset( $sidebars_widgets[ $sidebar ] ) ) {
-					$sidebars_widgets[ $sidebar ] = array();
-				}
-				
-				$sidebars_widgets[ $sidebar ][] = $widget_id . '-' . $next_key;
-				$widget_instances[ $next_key ] 	= $widget_data ? $widget_data : array();
-				
-				update_option( 'sidebars_widgets', $sidebars_widgets );
-				update_option( 'widget_' . $widget_id, $widget_instances );
-			}
-			
 			return $this;
 		}
-		
-		// Removes all widgets from the given sidebar
-		public function clear_sidebar( string $sidebar ): sv_sidebar {
-			$sidebars_widgets 	= get_option( 'sidebars_widgets', array() );
-			
-			if ( isset( $sidebars_widgets[ $sidebar ] )  ) {
-				$sidebars_widgets[ $sidebar ] = array();
-				
-				update_option( 'sidebars_widgets', $sidebars_widgets );
-			}
-			
-			return $this;
-		}
-	
-		// Setter & Getter
+
 		public function get_sidebars( $parent = false ): array {
 			$sidebars = $this::$sidebars;
 			
@@ -144,6 +171,32 @@
 			}
 			
 			return $sidebars;
+		}
+		public function get_sidebars_for_settings_options( $parent = false ): array {
+			$sidebars = $this::get_sidebars($parent);
+
+			$sidebars_array		= array(''	=> __('No Sidebar', 'sv100'));
+
+			foreach($sidebars as $sidebar){
+				$sidebars_array[$sidebar['id']]		= $sidebar['name'];
+			}
+
+			return $sidebars_array;
+		}
+
+		public function get_sidebars_for_metabox_options( $parent = false ): array {
+			$sidebars = $this::get_sidebars($parent);
+
+			$sidebars_array		= array(
+				''			=> __('Inherit', 'sv100'),
+				'0'			=> __('Hidden', 'sv100'),
+			);
+
+			foreach($sidebars as $sidebar){
+				$sidebars_array[$sidebar['id']]		= $sidebar['name'];
+			}
+
+			return $sidebars_array;
 		}
 		
 		public function set_ID( string $ID ): sv_sidebar {
