@@ -46,8 +46,3 @@
 .sv100_sv_sidebar .widget .screen-reader-text {
 	display: none;
 }
-.sv100_sv_sidebar .widget figure,
-.sv100_sv_sidebar .widget img
-{
-	max-width:100%;
-}
