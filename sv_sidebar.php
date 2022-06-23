@@ -30,9 +30,6 @@
 	
 			// Action Hooks
 			add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
-
-			// disable block based sidebars/widgets, as some kind of bug results in some sidebars not displayed on admin screen
-			remove_theme_support( 'widgets-block-editor' );
 		}
 		protected function load_settings(): sv_sidebar{
 			$this->get_setting('sidebars')
@@ -102,16 +99,6 @@
 
 				foreach($this->get_scripts() as $script){
 					$script->set_is_enqueued();
-				}
-
-				// conditionally load Custom CSS for active Widgets
-				if(isset(wp_get_sidebars_widgets()[$ID])){
-					foreach(wp_get_sidebars_widgets()[$ID] as $widget){
-						$slug		= _get_widget_id_base($widget);
-						$this->get_script( 'widget_'.$slug )
-							->set_path( 'lib/css/widgets/'.$slug.'.css' )
-							->set_is_enqueued();
-					}
 				}
 			}
 	
